@@ -14,8 +14,7 @@ class TaskController extends Controller
      */
     public function index(): JsonResponse
     {
-        $tasks = Task::orderBy('created_at', 'desc')->get();
-        return response()->json($tasks, 200);
+        return response()->json(Task::all(), 200);
     }
 
     /**
@@ -26,7 +25,7 @@ class TaskController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status' => ['nullable', Rule::in(['pending', 'in_progress', 'completed'])],
+            'status' => ['nullable', Rule::in(['függőben', 'folyamatban', 'befejezett'])],
         ]);
 
         $task = Task::create($validated);
@@ -49,7 +48,7 @@ class TaskController extends Controller
         $validated = $request->validate([
             'title' => 'sometimes|required|string|max:255',
             'description' => 'nullable|string',
-            'status' => ['nullable', Rule::in(['pending', 'in_progress', 'completed'])],
+            'status' => ['nullable', Rule::in(['függőben', 'folyamatban', 'befejezett'])],
         ]);
 
         $task->update($validated);
@@ -62,6 +61,6 @@ class TaskController extends Controller
     public function destroy(Task $task): JsonResponse
     {
         $task->delete();
-        return response()->json(['message' => 'Task deleted successfully'], 200);
+        return response()->json(['message' => 'Task törölve'], 200);
     }
 }

@@ -16,8 +16,5 @@ class Task extends Model
         'status',
     ];
 
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
+  
 }
